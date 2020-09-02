@@ -6,20 +6,26 @@ function onReady() {
   console.log("im ready");
   $.ajax({
     url: "/activities",
-  }).then(function (activities) {
-    console.log("we got a response!", activities);
+    method: "GET",
+  })
+    .then(function (activities) {
+      console.log("we got a response!", activities);
 
-    // Render the activites
-    for (let activity of activities) {
-      $('tbody').append(`
+      // Render the activites
+      for (let activity of activities) {
+        $("tbody").append(`
       <tr>
       <td>${activity.activity}</td>
       <td>${activity.isScreenTime}</td>
       <td>${activity.type}</td>
       </tr>
       `);
-    }
-  });
+      }
+    })
+    .catch(function (errorInfo) {
+      console.log("something bad hapened!", errorInfo);
+      alert("server is down, try again later");
+    });
 }
 
 // let activities;
